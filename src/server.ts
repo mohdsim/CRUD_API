@@ -12,9 +12,7 @@ app.listen(PORT,():void=>{
     console.log(`Server running on Port ${PORT}`)
 })
 
-// getStudentInfo().then((res)=>{
-//     console.log("result data---->",res)
-// })
+
 
 
 
