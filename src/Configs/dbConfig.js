@@ -1,15 +1,15 @@
  const dotenv=require('dotenv')
  const assert=require('assert')
  dotenv.config()
- //console.log("process.env-->",process.env)
- //const{SQL_USER,SQL_PASSWORD,SQL_DATABASE,SQL_SERVER,SQL_ENCRYPT}=process.env
+//  console.log("process.env-->",process.env)
+//  const{SQL_USER,SQL_PASSWORD,SQL_DATABASE,SQL_SERVER}=process.env
 //const sqlEncript=process.env.sqlEncript ==='true'
 //const sqlEncript=process.env.sqlEncript ==='false'
 
 //  assert(PORT,'PORT IS REQUIRED')
 //  assert(HOST,'HOST IS REQUIRED')
-assert(8081,'PORT IS REQUIRED')
-assert('localhost','HOST IS REQUIRED')
+// assert(8081,'PORT IS REQUIRED')
+// assert('localhost','HOST IS REQUIRED')
 
 //  *******************
 //#express server config
@@ -35,21 +35,10 @@ assert('localhost','HOST IS REQUIRED')
 //       enableArithAbort:  true,
 //       instancename:  'SQLEXPRESS'  // SQL Server instance name
 //     },
-//     port:PORT
+//    // port:PORT
 //   }
 
-// const  config = {
-//   user:'mohdtest', // sql user
-//   password:'Btech@2k21', //sql user password
-//   server:'127.0.0.1', // if it does not work try- localhost
-//   database:'testDB',
-//   options: {
-//     trustedconnection:  true,
-//     enableArithAbort:  true,
-//    instancename: 'DESKTOP-PKRMF1F/SQLEXPRESS' || 'SQLEXPRESS'  // SQL Server instance name
-//   },
-//   port:8081 //PORT
-// }
+
 
 const  config = {
   user:'mohdtest', // sql user
@@ -66,5 +55,4 @@ const  config = {
      },
 }
 
-  //module.exports =config
   module.exports = config
