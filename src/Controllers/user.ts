@@ -1,3 +1,6 @@
+//const logger = require('./logger').createLogger(); // logs to STDOUT
+// logger = require('./logger').createLogger('development.log');
+
  const config=require('../Configs/dbConfig')
 var sql = require("mssql");
 
@@ -6,8 +9,9 @@ const homeDetails= (req:any,resp:any)=>{
     sql.connect(config, function (err) {
     
         if (err){
-            console.log("Db Data",err);
-            return err }
+             console.log("Db Data in user.ts--->",err);
+             return err
+         }
         // create Request object
         var request = new sql.Request();
         // query to the database and get the records
