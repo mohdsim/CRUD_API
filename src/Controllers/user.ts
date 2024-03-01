@@ -1,13 +1,22 @@
+ const config=require('../Configs/dbConfig')
+var sql = require("mssql");
+
 const homeDetails= (req:any,resp:any)=>{
-resp.json({
-    content: [
-        {fName:'Mohd',lName:'Ahtesham',contact:'9878987654',email:'abc@gmail.com'},
-        {fName:'Ujjwal',lName:'Miraje',contact:'9878987656',email:'atestgmail.com'},
-        {fName:'Sandeep',lName:'Kanu',contact:'9878987876',email:'aestgmail.com'}
-    ]
-});
-
-
+     // connect to your database
+    sql.connect(config, function (err) {
+    
+        if (err){
+            console.log("Db Data",err);
+            return err }
+        // create Request object
+        var request = new sql.Request();
+        // query to the database and get the records
+        request.query('select * from Persons', function (err, recordset) {
+            if (err) console.log(err)
+           // send records as a response
+            resp.send(recordset);
+          });
+    });
 }
 
 module.exports=homeDetails

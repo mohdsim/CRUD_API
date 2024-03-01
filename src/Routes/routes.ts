@@ -1,9 +1,7 @@
-const express=require('express');
-const router=express.Router();
-const homeDetails=require('../Controllers/user')
+const express = require("express");
+const router = express.Router();
+const homeDetails = require("../Controllers/user");
 
-router.get('/home',homeDetails)
-
-
+router.get("/home/data", homeDetails);
 
 module.exports = router;
