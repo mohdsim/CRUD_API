@@ -19,6 +19,8 @@ const config = {
   },
 };
 
+
+
 //Given The Static Value or Withiout Envoirnment Both Will Work
 // const  config = {
 //   user:'mohdtest', // sql user
