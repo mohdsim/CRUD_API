@@ -6,13 +6,20 @@ const getStudents = require("../Controllers/students_info");
 router.post('/createBook',getStudents.createBook)
 
 //Create Student Records
-router.post("/students/createStudent", getStudents.createStudent);
+router.post("/students/createUser", getStudents.createUser);
 
-//Get Students Record
-router.get("/students/getStudents", getStudents.getStudents);
+//Get All Records Record
+router.get("/students/getAllUsers", getStudents.getAllUsers);
 
 //Get Student By Id
-router.get("/students/getStudentById/:id", getStudents.getStudentById);
+router.get("/students/getUserById/:userId", getStudents.getUserById);
+
+//Update the User By Id
+router.put("/students/updateUserById/:userId", getStudents.updateUserById);
+
+
+//Get Student By Id
+router.delete("/students/deletUserById/:userId", getStudents.deletUserById);
 
 
 module.exports = router;

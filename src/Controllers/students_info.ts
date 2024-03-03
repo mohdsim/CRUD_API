@@ -1,12 +1,9 @@
 
 const express = require('express');
 const app = express();
-const port = 8082;
-
 // Middleware to parse JSON bodies
 app.use(express.json());
-
- const config=require('../Configs/dbConfig')
+const config=require('../Configs/dbConfig')
 var sql = require("mssql");
 
 //Create Student
@@ -43,7 +40,7 @@ var sql = require("mssql");
 
 
 //Dynamic Post Api
-const createStudent = (req: any, resp: any) => {
+const createUser = (req: any, resp: any) => {
     
       sql.connect(config, function (err) {
         if (err) {
@@ -64,7 +61,12 @@ const createStudent = (req: any, resp: any) => {
             }
 
             // Sending success response
-            return resp.send("Student created successfully.");
+            //return resp.send("Student created successfully.");
+            resp.json(
+                {
+                "message":"Added Successfully",
+                "data":recordset
+               })
         });
     });
 }
@@ -105,7 +107,7 @@ let books = [];
 
 
 
-const getStudents= (req:any,resp:any)=>{
+const getAllUsers= (req:any,resp:any)=>{
      // connect to your database
     sql.connect(config, function (err) {
     
@@ -116,7 +118,7 @@ const getStudents= (req:any,resp:any)=>{
         // create Request object
         var request = new sql.Request();
         // query to the database and get the records
-        request.query('select * from loged_in_user', function (err, recordset) {
+        request.query('select *from loged_in_user', function (err, recordset) {
             if (err) console.log(err)
            // send records as a response
            return resp.send(recordset);
@@ -127,20 +129,84 @@ const getStudents= (req:any,resp:any)=>{
 
 
 //Get Student Info By Id
-const getStudentById= (req:any,resp:any)=>{
+const getUserById= (req:any,resp:any)=>{
     // connect to your database
    sql.connect(config, function (err) {
      if (err){
             console.log("Db Data in user.ts--->",err);
             return err
         }
+      
        // create Request object
+       const userId = parseInt(req.params.userId)
        var request = new sql.Request();
+       request.input('userId', sql.Int,userId);
        // query to the database and get the records
-       request.query('select * from Persons WHERE id=?',[req.parama.id], function (err, recordset) {
+       request.query('SELECT * FROM loged_in_user Where userId=@userId', function (err, recordset) {
            if (err) console.log(err)
           // send records as a response
-           resp.send(recordset);
+        //    resp.send(recordset);
+        resp.json(
+            {
+            "message":"Fetche Successfully",
+            "data":recordset
+           })
+         });
+   });
+}
+
+//Update User
+
+const updateUserById= (req:any,resp:any)=>{
+    // connect to your database
+   sql.connect(config, function (err) {
+     if (err){
+            console.log("Db Data in user.ts--->",err);
+            return err
+        }
+        // create Request object
+       var request = new sql.Request();
+       request.input('userId', sql.Int,req.body.userId); 
+       request.input('userName', sql.VarChar(255), req.body.userName);
+       //request.input('userId', sql.Int, id);
+       // query to the database and Delete the records
+       request.query('UPDATE loged_in_user SET userId=@userId, userName=@userName WHERE userId=@userId',function (err, recordset) {
+           if (err) console.log(err)
+            resp.json(
+            {
+            "message":"Updated Successfully",
+            "data":recordset
+           })
+         });
+   });
+}
+
+
+//Get Student Info By Id
+const deletUserById= (req:any,resp:any)=>{
+    // connect to your database
+   sql.connect(config, function (err) {
+     if (err){
+            console.log("Db Data in user.ts--->",err);
+            return err
+        }
+       
+        const id = parseInt(req.params.userId)
+
+       // create Request object
+       var request = new sql.Request();
+       request.input('userId', sql.Int, id);
+       // query to the database and Delete the records
+       request.query('DELETE FROM loged_in_user WHERE userId=@userId',function (err, recordset) {
+           if (err) console.log(err)
+          // send records as a response
+           //resp.send(recordset);
+          // console.log("recordset--->",recordset)
+           resp.json(
+            {
+            "message":"Deleted Successfully",
+            "data":recordset
+           })
          });
    });
 }
@@ -148,8 +214,10 @@ const getStudentById= (req:any,resp:any)=>{
 
 
 module.exports={
-    createStudent,
+    createUser,
     createBook,
-    getStudents,
-    getStudentById
+    getAllUsers,
+    getUserById,
+    updateUserById,
+    deletUserById,
 }
