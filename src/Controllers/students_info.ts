@@ -1,8 +1,5 @@
-//const logger = require('./logger').createLogger(); // logs to STDOUT
-// logger = require('./logger').createLogger('development.log');
-const express = require('express');
-const bodyParser = require('body-parser');
 
+const express = require('express');
 const app = express();
 const port = 8082;
 
@@ -13,7 +10,7 @@ app.use(express.json());
 var sql = require("mssql");
 
 //Create Student
-
+//Static Post Api
 
 // const createStudent= (req:any,resp:any)=>{
 
@@ -43,19 +40,12 @@ var sql = require("mssql");
 
 // }
 
-const createStudent = (req: any, resp: any) => {
-    // console.log("req---->",req)
-    // console.log("req B---->",req.body)
-    // const { userId, userName } = req.body;
-    // console.log("userId---->",userId)
-    // console.log("userName---->",userName)
-   
-    const data= {
-        "userId": 4,
-        "userName": "Mohd Rizwan" // Assuming "Raju" is the user name to be inserted
-    };
 
-    sql.connect(config, function (err) {
+
+//Dynamic Post Api
+const createStudent = (req: any, resp: any) => {
+    
+      sql.connect(config, function (err) {
         if (err) {
             console.log("Db Data in student_info.ts--->", err);
             return resp.status(500).send(err); // Sending error response
@@ -64,8 +54,8 @@ const createStudent = (req: any, resp: any) => {
         var request = new sql.Request();
 
         // Using parameterized query to prevent SQL injection
-        request.input('userId', sql.Int, data.userId); 
-        request.input('userName', sql.VarChar(255), data.userName);
+        request.input('userId', sql.Int, req.body.userId); 
+        request.input('userName', sql.VarChar(255),req.body.userName);
         
         request.query('INSERT INTO loged_in_user VALUES (@userId, @userName)', function (err, recordset) {
             if (err) {
@@ -80,6 +70,37 @@ const createStudent = (req: any, resp: any) => {
 }
 
 
+//**************************
+
+
+//const cors = require('cors');
+
+
+
+const createBook =(req, res)=>{
+// Where we will keep books
+let books = [];
+
+//app.use(cors());
+
+// Configuring body parser middleware
+// app.use(bodyParser.urlencoded({ extended: true}));
+// app.use(bodyParser.json());
+// app.use(express.json());
+
+
+    const book = req.body;
+
+    // Output the book to the console for debugging
+    console.log(book);
+    books.push(book);
+    
+    res.send(req.body);
+   // res.send('Book is added to the database');
+   // res.send(JSON.parse(req));
+//});
+//***************************
+}
 
 
 
@@ -128,6 +149,7 @@ const getStudentById= (req:any,resp:any)=>{
 
 module.exports={
     createStudent,
+    createBook,
     getStudents,
     getStudentById
 }

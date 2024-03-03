@@ -1,3 +1,5 @@
+//Best Tutorial for SQL SSMS
+//https://www.youtube.com/watch?v=9lp3RP22XDU&t=1092s
 const dotenv = require("dotenv");
 const assert = require("assert");
 dotenv.config();
